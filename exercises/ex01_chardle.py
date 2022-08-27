@@ -32,9 +32,9 @@ if five_character_word[4] == single_character:
     print(single_character + " is found at index 4")
     count = count + 1 
 
-if count > 1:
-    plural: str = "s"
+if count >= 1: 
+    print(str(count) + " instance" + plural + " of " + single_character + " found in " + five_character_word)
+else:
+    print("No instances of " + single_character + " found in " + five_character_word)
 
-print(str(count) + " instance" + plural + " of " + single_character + " found in " + five_character_word)
-
-
+exit()
