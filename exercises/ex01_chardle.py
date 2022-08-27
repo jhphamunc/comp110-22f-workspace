@@ -14,23 +14,26 @@ if len(single_character) != 1:
 print("Searching for " + single_character + " in " + five_character_word)
 
 count = 0
-plural = ""
 
-if five_character_word[0] == single_character:
-    print(single_character + " is found at index 0")
+if single_character == five_character_word[0]:
+    print(single_character + " found at index 0")
     count = count + 1 
-if five_character_word[1] == single_character:
-    print(single_character + " is found at index 1")
+if single_character == five_character_word[1]:
+    print(single_character + " found at index 1")
     count = count + 1 
-if five_character_word[2] == single_character:
-    print(single_character + " is found at index 2")
+if single_character == five_character_word[2]:
+    print(single_character + " found at index 2")
     count = count + 1 
-if five_character_word[3] == single_character:
-    print(single_character + " is found at index 3")
+if single_character == five_character_word[3]:
+    print(single_character + " found at index 3")
     count = count + 1 
-if five_character_word[4] == single_character:
-    print(single_character + " is found at index 4")
+if single_character == five_character_word[4]:
+    print(single_character + " found at index 4")
     count = count + 1 
+
+plural = ""
+if count > 1:
+    plural = "s"
 
 if count >= 1: 
     print(str(count) + " instance" + plural + " of " + single_character + " found in " + five_character_word)
