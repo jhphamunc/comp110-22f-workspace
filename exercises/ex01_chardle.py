@@ -37,5 +37,3 @@ elif count > 1:
     print(str(count) + " instances of " + single_character + " found in " + five_character_word)
 else:
     print("No instances of " + single_character + " found in " + five_character_word)
-
-exit()
