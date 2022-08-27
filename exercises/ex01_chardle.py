@@ -1,4 +1,4 @@
-"""This is a ex01 Chardle"""
+"""This is a ex01 Chardle."""
 
 __author__ = "730560264"
 
@@ -38,4 +38,4 @@ elif count > 1:
 else:
     print("No instances of " + single_character + " found in " + five_character_word)
 
-
+exit()
