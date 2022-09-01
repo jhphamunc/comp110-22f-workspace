@@ -37,5 +37,5 @@ while guess != "":
             exit()
         elif guess != secret:
             print(display)
-            guess = input("Not quite. Play again soon!")
+            print("Not quite. Play again soon!")
             exit()
