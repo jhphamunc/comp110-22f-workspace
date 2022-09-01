@@ -1,8 +1,8 @@
-"""EX02 One Shot Worlde"""
+"""EX02 One Shot Worlde!"""
 __author__ = "730560264"
 
 secret: str = "python"
-guess: str = input("What is your " + str(len(secret)) +"-letter guess: ")
+guess: str = input("What is your " + str(len(secret)) + "-letter guess: ")
 
 WHITE_BOX: str = "\U00002B1C"
 GREEN_BOX: str = "\U0001F7E9"
@@ -13,7 +13,7 @@ i: int = 0
 
 while i < 6:
     if len(guess) != len(secret):
-        guess = input("That was not " + str(len(secret)) +" letters! Try again: ")
+        guess = input("That was not " + str(len(secret)) + " letters! Try again: ")
     elif guess[i] == secret[i]:
         display = display + GREEN_BOX 
     elif guess[i] != secret[i]:
