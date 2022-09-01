@@ -2,7 +2,7 @@
 __author__ = "730560264"
 
 secret: str = "python"
-guess: str = input("What is your " + str(len(secret)) + "-letter guess: ")
+guess: str = input(f"What is your {str(len(secret))}-letter guess? ")
 
 WHITE_BOX: str = "\U00002B1C"
 GREEN_BOX: str = "\U0001F7E9"
@@ -13,7 +13,7 @@ i: int = 0
 
 while i < 6:
     if len(guess) != len(secret):
-        guess = input("That was not " + str(len(secret)) + " letters! Try again: ")
+        guess = input(f"That was not {str(len(secret))} letters! Try again: ")
     elif guess[i] == secret[i]:
         display = display + GREEN_BOX 
     elif guess[i] != secret[i]:
@@ -33,9 +33,9 @@ while guess != "":
     if len(guess) == len(secret):
         if guess == secret:
             print(display)
-            print("Woo! You got it!")
+            print(f"Woo! You got it!")
             exit()
         elif guess != secret:
             print(display)
-            print("Not quite. Play again soon!")
+            print(f"Not quite. Play again soon!")
             exit()
