@@ -11,9 +11,9 @@ YELLOW_BOX: str = "\U0001F7E8"
 # sets up the colored boxes to indicate correct/ wrong
 
 
-def contains_char(word: str, letter: str) -> bool:
+def contains_char(word: str, letter: str) -> bool: 
+    """defines the contains char function which goes through the secret word using one letter of the guess at a time"""
     assert len(letter) == 1
-    # defines the contains char function which goes through the secret word using one letter of the guess at a time
     i = 0
     contained_in_word = False
     # predetermines the value to be false unless otherwise
@@ -28,9 +28,9 @@ def contains_char(word: str, letter: str) -> bool:
     return contained_in_word
 
 
-def emojified(guess: str, secret: str) -> str:
+def emojified(guess: str, secret: str) -> str: 
+    """defines the emojified function which takes the contrains_char function and gives each index a colored box"""
     assert len(guess) == len(secret)
-    # defines the emojified function which takes the contrains_char function and gives each index a colored box
     i = 0
     color_display: str = ""
     while i < len(secret):
@@ -49,9 +49,9 @@ def emojified(guess: str, secret: str) -> str:
     return color_display
 
 
-def input_guess(expected_length: int) -> str:
+def input_guess(expected_length: int) -> str: 
+    """defines the input_guess function which makes sure the length of the guess is good"""
     user_guess = input(f"Enter a {expected_length} character word: ")
-    # defines the input_guess function which makes sure the length of the guess is good
     while len(user_guess) != (expected_length):
         user_guess = input(f"That wasn't {expected_length} chars! Try again: ")
         # if the length of guess is too long or too short an error appears and you get a chance to retry
@@ -61,10 +61,10 @@ def input_guess(expected_length: int) -> str:
     return user_guess
 
 
-def main() -> None:
+def main() -> None: 
+    """defines main function which is where the program begins"""
     current_turn: int = 1
     max_turn: int = 6 
-    # defines main function which is where the program begins
     while current_turn <= max_turn:
         print(f"=== Turn {current_turn}/{max_turn} ===")
         # sets up the beginning code/ start of the program and the headings for each turn after
@@ -82,4 +82,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    # calls the function to begin
