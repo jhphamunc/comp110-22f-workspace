@@ -14,7 +14,7 @@ GREEN_BOX: str = "\U0001F7E9"
 YELLOW_BOX: str = "\U0001F7E8"
 
 
-def contains_char(word: str, letter: str) -> str:
+def contains_char(word: str, letter: str) -> bool:
     assert len(letter) == 1
     i = 0
     contained_in_word = False
@@ -55,16 +55,16 @@ def input_guess(expected_length: str) -> str:
     return correct
 
 def main() -> None:
-    current_turn: int = 1
+    current_turn: int = 0
     max_turn: int = 6 
-    while current_turn <= max_turn:
-        print(f"=== Turn {current_turn}/{max_turn} ===")
+    while current_turn < max_turn:
+        print(f"=== Turn {current_turn + 1}/{max_turn} ===")
         if input_guess(len(secret_word)) != True:
             current_turn += 1
         else:
-            print(f"You won in {current_turn}/{max_turn} turns!") 
-            exit()
-    else:
+            print(f"You won in {current_turn + 1}/{max_turn} turns!") 
+            current_turn += max_turn
+    if current_turn == 7:
         print(f"X/{max_turn} - Sorry, try again tomorrow!")
 
 if __name__ == "__main__":
