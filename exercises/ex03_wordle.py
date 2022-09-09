@@ -12,7 +12,7 @@ YELLOW_BOX: str = "\U0001F7E8"
 
 
 def contains_char(word: str, letter: str) -> bool: 
-    """defines the contains char function which goes through the secret word using one letter of the guess at a time"""
+    """Defines the contains char function which goes through the secret word using one letter of the guess at a time."""
     assert len(letter) == 1
     i = 0
     contained_in_word = False
@@ -29,7 +29,7 @@ def contains_char(word: str, letter: str) -> bool:
 
 
 def emojified(guess: str, secret: str) -> str: 
-    """defines the emojified function which takes the contrains_char function and gives each index a colored box"""
+    """Defines the emojified function which takes the contrains_char function and gives each index a colored box."""
     assert len(guess) == len(secret)
     i = 0
     color_display: str = ""
@@ -50,7 +50,7 @@ def emojified(guess: str, secret: str) -> str:
 
 
 def input_guess(expected_length: int) -> str: 
-    """defines the input_guess function which makes sure the length of the guess is good"""
+    """Defines the input_guess function which makes sure the length of the guess is good."""
     user_guess = input(f"Enter a {expected_length} character word: ")
     while len(user_guess) != (expected_length):
         user_guess = input(f"That wasn't {expected_length} chars! Try again: ")
@@ -62,7 +62,7 @@ def input_guess(expected_length: int) -> str:
 
 
 def main() -> None: 
-    """defines main function which is where the program begins"""
+    """Defines main function which is where the program begins."""
     current_turn: int = 1
     max_turn: int = 6 
     while current_turn <= max_turn:
