@@ -7,6 +7,7 @@ from string import whitespace
 
 contained_in_word: str = ""
 secret_word: str = "codes"
+correct: str = ""
 
 WHITE_BOX: str = "\U00002B1C"
 GREEN_BOX: str = "\U0001F7E9"
@@ -39,27 +40,30 @@ def emojified(guess: str, secret: str) -> str:
         i += 1
     print(color_display)
 
-def input_guess(expected_length: str, turn_count: int) -> str:
+def input_guess(expected_length: str) -> str:
     max_turn: int = 6  
     user_guess = input(f"Enter a {expected_length} character word: ")
     while len(user_guess) != int(expected_length):
         user_guess = input(f"That wasn't {expected_length} chars! Try again: ")
     if user_guess == secret_word:
         emojified(user_guess, secret_word)
-        print(f"You won in {turn_count}/{max_turn} turns!") 
-        exit()
+        correct = True
         # try to figure out what is wrong with this/ find a better way to do this
     else:
         emojified(user_guess, secret_word)
-    return user_guess
+        correct = False
+    return correct
 
 def main() -> None:
     current_turn: int = 1
     max_turn: int = 6 
     while current_turn <= max_turn:
         print(f"=== Turn {current_turn}/{max_turn} ===")
-        input_guess(len(secret_word), current_turn)
-        current_turn += 1
+        if input_guess(len(secret_word)) != True:
+            current_turn += 1
+        else:
+            print(f"You won in {current_turn}/{max_turn} turns!") 
+            exit()
     else:
         print(f"X/{max_turn} - Sorry, try again tomorrow!")
 
