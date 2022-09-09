@@ -5,9 +5,7 @@ __author__ = "730560264"
 from string import whitespace
 
 
-contained_in_word: str = ""
 secret_word: str = "codes"
-correct: str = ""
 
 WHITE_BOX: str = "\U00002B1C"
 GREEN_BOX: str = "\U0001F7E9"
@@ -41,30 +39,28 @@ def emojified(guess: str, secret: str) -> str:
     print(color_display)
     return(color_display)
 
-def input_guess(expected_length: int) -> bool:
-    max_turn: int = 6  
+def input_guess(expected_length: int) -> str:
     user_guess = input(f"Enter a {expected_length} character word: ")
     while len(user_guess) != (expected_length):
         user_guess = input(f"That wasn't {expected_length} chars! Try again: ")
     if user_guess == secret_word:
         emojified(user_guess, secret_word)
-        correct = True
+        user_guess = secret_word
         # try to figure out what is wrong with this/ find a better way to do this
     elif len(user_guess) == len(secret_word):
         emojified(user_guess, secret_word)
-        correct = False
-    return correct
+    return user_guess
 
 def main() -> None:
     current_turn: int = 1
     max_turn: int = 6 
     while current_turn <= max_turn:
         print(f"=== Turn {current_turn}/{max_turn} ===")
-        if input_guess(len(secret_word)) != True:
-            current_turn += 1
-        else:
+        if input_guess(len(secret_word)) == secret_word:
             print(f"You won in {current_turn}/{max_turn} turns!") 
             current_turn += max_turn + 1
+        else:
+            current_turn += 1
     if current_turn == 7:
         print(f"X/{max_turn} - Sorry, try again tomorrow!")
 
