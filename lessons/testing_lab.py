@@ -1,9 +1,4 @@
-def my_max(a: int, b: int) -> int:
-   """Returns the largest argument."""
-   if a >= b:
-      return a
-
-   return b
-
-
-print(my_max(0, 50))
+number: list[int] = list()
+number.append(1)
+number.append(3)
+print(number[3])
