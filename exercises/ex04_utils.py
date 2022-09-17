@@ -12,7 +12,7 @@ def all(list: Sized, integer: int) -> bool:
         return False
     i = 0
     while i < len(list):
-        if list[i] == integer[0]:
+        if list[i] == integer:
             i += 1
         else:
             return False
@@ -48,10 +48,10 @@ def max(input: list[int]) -> int:
 def is_equal(list1: list[int], list2: list[int]) -> bool:
     """This is the is_equal function which compares two lists to make sure all indexes are the same between the two."""
     i = 0
-    if len(list1) == 0 or len(list2) == 0:
-        return False
-    elif len(list1) == 0 and len(list2) == 0:
+    if len(list1) == 0 and len(list2) == 0:
         return True
+    elif len(list1) == 0 or len(list2) == 0:
+        return False
     while i < len(list1) and len(list1) == len(list2):
         if list1[i] == list2[i]:
             i += 1
