@@ -12,7 +12,7 @@ def all(list: Sized, integer: int) -> bool:
         return False
     i = 0
     while i < len(list):
-        if list[i] == integer:
+        if list[i] == integer[0]:
             i += 1
         else:
             return False
@@ -42,7 +42,7 @@ def max(input: list[int]) -> int:
             return max1
         elif max2 > max1:
             return max2
-    return input
+    return int
 
 
 def is_equal(list1: list[int], list2: list[int]) -> bool:
@@ -51,7 +51,7 @@ def is_equal(list1: list[int], list2: list[int]) -> bool:
     if len(list1) == 0 or len(list2) == 0:
         return False
     elif len(list1) == 0 and len(list2) == 0:
-        return False
+        return True
     while i < len(list1) and len(list1) == len(list2):
         if list1[i] == list2[i]:
             i += 1
