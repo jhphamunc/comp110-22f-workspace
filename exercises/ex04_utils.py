@@ -3,10 +3,13 @@
 __author__ = "730560264"
 
 
+from typing import Sized
+
+
 def all(list: int, integer: int) -> bool:
     """This is the all function which makes sure all the variables in a list are the same as the integer."""
     if len(list) == 0:
-        raise ValueError("max() arg is an empty list")
+        raise ValueError("all() arg is an empty list")
     i = 0
     while i < len(list):
         if list[i] == integer:
@@ -22,19 +25,23 @@ def max(input: list[int]) -> int:
     if len(input) == 0:
         raise ValueError("max() arg is an empty list")
     else:
+        max1: int = 0
+        max2: int = 0
         c = 0
         i = 0
-        x = 0
-        while c < len(input) - 1 and i != len(input) and x != len(input) + 1:
+        x = 1
+        while c < len(input) * 2 and i != len(input) and x != len(input):
             if input[i] >= input[x]:
-                x = i + 1
+                max1 = input[i]
+                x = x + 1
             else:
-                i = x+ 1
+                max2 = input[x]
+                i = i + 1
             c += 1
-        if input[i] > input[x]:
-            return input[i]
-        else:
-            return input[x]
+        if max1 >= max2:
+            return max1
+        elif max2 > max1:
+            return max2
 
 
 def is_equal(list1: list[int], list2: list[int]) -> bool:
