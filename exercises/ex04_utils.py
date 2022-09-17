@@ -3,7 +3,10 @@
 __author__ = "730560264"
 
 
-def all(list: int, integer: int) -> bool:
+from typing import Sized
+
+
+def all(list: Sized, integer: int) -> bool:
     """This is the all function which makes sure all the variables in a list are the same as the integer."""
     if len(list) == 0:
         return False
@@ -39,12 +42,15 @@ def max(input: list[int]) -> int:
             return max1
         elif max2 > max1:
             return max2
+    return input
 
 
 def is_equal(list1: list[int], list2: list[int]) -> bool:
     """This is the is_equal function which compares two lists to make sure all indexes are the same between the two."""
     i = 0
     if len(list1) == 0 or len(list2) == 0:
+        return False
+    elif len(list1) == 0 and len(list2) == 0:
         return False
     while i < len(list1) and len(list1) == len(list2):
         if list1[i] == list2[i]:
