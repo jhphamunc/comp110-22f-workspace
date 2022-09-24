@@ -43,3 +43,16 @@ def test_sub_empty() -> None:
     start_index: int = 1
     end_index: int = 0
     assert sub(list, start_index, end_index) == []
+
+
+def test_sub_two_terms() -> None:
+    list: list[int] = [1, 2, 3, 4]
+    start_index: int = 1
+    end_index: int = 3
+    assert sub(list, start_index, end_index) == [2, 3]
+
+def test_sub_three_terms() -> None:
+    list: list[int] = [1, 2, 3, 4]
+    start_index: int = 0
+    end_index: int = 3
+    assert sub(list, start_index, end_index) == [1, 2, 3]
