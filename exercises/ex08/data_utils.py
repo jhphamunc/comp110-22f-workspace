@@ -10,7 +10,7 @@ from csv import DictReader
 def read_csv_rows(filename: str) -> list[dict[str, str]]:
     """Read the rows of a csv into a 'table'."""
     result: list[dict[str, str]] = []
-    
+
     # Open a handle to the data file
     file_handle = open(filename, "r", encoding="utf8")
 
@@ -43,18 +43,55 @@ def columnar(row_table: list[dict[str, str]]) -> dict[str, list[str]]:
     first_row: dict[str, str] = row_table[0]
     for column in first_row:
         result[column] = column_values(row_table, column)
-    
+
     return result
 
 
 def head(dict1: dict[str, list[str]], int1: int) -> dict[str, list[str]]:
+    """This is head function which shows the first 5 rows of data."""
     result: dict[str, list[str]] = {}
-    list: list[dict[str, str]] = []
+    max: int = int1
     for column in dict1:
-        list1: list[str] = []
-        i: int = 0
-        while i < int1:
-            list1.append(dict1[column][i])
-            i += 1
-        result[column] = list1
+        if len(dict1) <= int1:
+            result = dict1
+        else:
+            list1: list[str] = []
+            i: int = 0
+            while i < max:
+                list1.append(dict1[column][i])
+                i += 1
+            result[column] = list1
+    return result
+
+
+def select(dict1: dict[str, list[str]], list1: list[str]) -> dict[str, list[str]]:
+    """This is select function which selects the columns."""
+    result: dict[str, list[str]] = {}
+    for column in list1:
+        for key in dict1:
+            result[column] = dict1[column]
+    return result
+
+
+def concat(dict1: dict[str, list[str]], dict2: dict[str, list[str]]) -> dict[str, list[str]]:
+    """This is concat function which adds more data."""
+    result: dict[str, list[str]] = {}
+    for column in dict1:
+        result[column] = dict1[column]
+    for column in dict2:
+        if column in result:
+            result[column] += dict2[column]
+        else:
+            result[column] = dict2[column]
+    return result
+
+
+def count(list1: list[str]) -> dict[str, int]:
+    """This is count function which adds up the columns."""
+    result: dict[str, int] = {}
+    for item in list1:
+        if item in result:
+            result[item] += 1
+        else:
+            result[item] = 1
     return result
