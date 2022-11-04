@@ -3,10 +3,10 @@
 from __future__ import annotations
 from random import random
 from exercises.ex09 import constants
-from math import sin, cos, pi
+from math import sin, cos, pi, sqrt
 
 
-__author__ = ""  # TODO
+__author__ = "730560264"  
 
 
 class Point:
@@ -25,17 +25,22 @@ class Point:
         y: float = self.y + other.y
         return Point(x, y)
 
+    def distance(self, other: Point) -> int:
+        dist: int = 0
+        dist = sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
+        return dist
 
 class Cell:
     """An individual subject in the simulation."""
     location: Point
     direction: Point
-    sickness: int = 0
+    sickness: int = constants.VULNERABLE
 
     def __init__(self, location: Point, direction: Point):
         """Construct a cell with its location and direction."""
         self.location = location
         self.direction = direction
+    
 
     # Part 1) Define a method named `tick` with no parameters.
     # Its purpose is to reassign the object's location attribute
@@ -43,10 +48,34 @@ class Cell:
     # direction. Hint: Look at the add method.
     def tick(self) -> None:
         self.location = self.location.add(self.direction)
-        
+    
+    def contract_disease(self):
+        self.sickness = constants.INFECTED
+
+    def is_vulnerable(self) -> bool:
+        if self.sickness == constants.VULNERABLE:
+            return True
+        else:
+            return False
+
+    def is_infected(self) -> bool:
+        if self.sickness == constants.INFECTED:
+            return True
+        else:
+            return False
+
+    def contact_with(self, other: Cell):
+        if self.is_infected and other.is_vulnerable:
+            other.contract_disease 
+        elif self.is_vulnerable and other.is_infected:
+            self.contract_disease
+
     def color(self) -> str:
         """Return the color representation of a cell."""
-        return "black"
+        if self.is_vulnerable() == True:
+            return "gray"
+        elif self.is_infected() == True:
+            return "orange"
 
 
 class Model:
@@ -55,10 +84,19 @@ class Model:
     population: list[Cell]
     time: int = 0
 
-    def __init__(self, cells: int, speed: float):
+    def __init__(self, cells: int, speed: float, infected: int):
         """Initialize the cells with random locations and directions."""
         self.population = []
-        for _ in range(cells):
+        i: int = 0
+        if infected >= constants.CELL_COUNT or infected <= 0:
+            raise KeyError ("Some Number of cells must be infected")
+        for _ in range(cells - infected):
+            start_location: Point = self.random_location()
+            start_direction: Point = self.random_direction(speed)
+            cell: Cell = Cell(start_location, start_direction)
+            self.population.append(cell)
+        for _ in range(infected):
+            cell.sickness = constants.INFECTED
             start_location: Point = self.random_location()
             start_direction: Point = self.random_direction(speed)
             cell: Cell = Cell(start_location, start_direction)
@@ -70,7 +108,7 @@ class Model:
         for cell in self.population:
             cell.tick()
             self.enforce_bounds(cell)
-
+        Model.check_contacts(self)
 
     def random_location(self) -> Point:
         """Generate a random location."""
@@ -99,6 +137,15 @@ class Model:
         if cell.location.y < constants.MIN_Y:
             cell.location.y = constants.MIN_Y
             cell.direction.y *= -1.0
+
+    def check_contacts(self):
+        i: int = 0
+        while i < len(self.population):
+            j: int = i + 1
+            if Point.distance(self.population[i].location, self.population[j].location) <= constants.CELL_RADIUS:
+                Cell.contact_with(self.population[j])
+            j += 1
+        i += 1
 
     def is_complete(self) -> bool:
         """Method to indicate when the simulation is complete."""
