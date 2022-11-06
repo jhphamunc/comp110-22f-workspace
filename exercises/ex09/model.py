@@ -4,6 +4,7 @@ from __future__ import annotations
 from random import random
 from exercises.ex09 import constants
 from math import sin, cos, pi, sqrt
+ignore_missing_imports = True
 
 
 __author__ = "730560264"  
@@ -25,9 +26,9 @@ class Point:
         y: float = self.y + other.y
         return Point(x, y)
 
-    def distance(self, other: Point) -> int:
+    def distance(self, other: Point) -> float:
         """Checks to see the distance between two cells."""
-        dist: int = 0
+        dist: float = 0
         dist = sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
         return dist
  
@@ -48,13 +49,13 @@ class Cell:
     # the result of adding the self object's location with its
     # direction. Hint: Look at the add method.
 
-    def tick(self) -> None:
+    def tick(self):
         """Sets the tick rate for cell."""
         self.location = self.location.add(self.direction)
         if self.is_infected():
             self.sickness += 1
             if self.sickness > constants.RECOVERY_PERIOD:
-                self.sickness = constants.IMMUNE
+                self.immunize()
 
     def contract_disease(self):
         """Infects a cell."""
@@ -85,10 +86,11 @@ class Cell:
         """Return the color representation of a cell."""
         if self.is_vulnerable():
             return "gray"
-        elif self.is_infected():
+        if self.is_infected():
             return "orange"
-        elif self.is_immune():
+        if self.is_immune():
             return "lightskyblue"
+        return "dummy string"
 
     def immunize(self):
         """Makes the cell immune."""
@@ -111,36 +113,27 @@ class Model:
     def __init__(self, cells: int, speed: float, infected: int, immune: int = 0):
         """Initialize the cells with random locations and directions."""
         self.population = []
-        if infected <= 0 or infected >= constants.CELL_COUNT:
-            raise ValueError
-        if immune < 0 or immune >= constants.CELL_COUNT:
-            raise ValueError
-        for _ in range(cells - infected - immune):
+        if infected <= 0 or infected >= cells:
+            raise ValueError("Some number of the Cell must begin infected.")
+        if immune < 0 or immune + infected >= cells:
+            raise ValueError("Immune cells cannot go over cell count or below 0.")
+        for i in range(cells):
             start_location: Point = self.random_location()
             start_direction: Point = self.random_direction(speed)
             cell: Cell = Cell(start_location, start_direction)
+            if i < infected:
+                cell.contract_disease()
+            elif i < infected + immune:
+                cell.immunize()
             self.population.append(cell)
-        for _ in range(infected):
-            cell.sickness = constants.INFECTED
-            start_location: Point = self.random_location()
-            start_direction: Point = self.random_direction(speed)
-            cell: Cell = Cell(start_location, start_direction)
-            self.population.append(cell)
-        for _ in range(immune):
-            cell.sickness = constants.IMMUNE
-            start_location: Point = self.random_location()
-            start_direction: Point = self.random_direction(speed)
-            cell: Cell = Cell(start_location, start_direction)
-            self.population.append(cell)
-    
-    def tick(self) -> None:
+        
+    def tick(self):
         """Update the state of the simulation by one time step."""
         self.time += 1
         for cell in self.population:
             cell.tick()
             self.enforce_bounds(cell)
-        Model.check_contacts(self)
-        Model.is_complete
+        self.check_contacts()
 
     def random_location(self) -> Point:
         """Generate a random location."""
@@ -155,7 +148,7 @@ class Model:
         direction_y: float = sin(random_angle) * speed
         return Point(direction_x, direction_y)
 
-    def enforce_bounds(self, cell: Cell) -> None:
+    def enforce_bounds(self, cell: Cell):
         """Cause a cell to 'bounce' if it goes out of bounds."""
         if cell.location.x > constants.MAX_X:
             cell.location.x = constants.MAX_X
@@ -183,9 +176,7 @@ class Model:
 
     def is_complete(self) -> bool:
         """Method to indicate when the simulation is complete."""
-        w: int = 0
         for i in self.population:
-            if i.sickness != -1 and w < len(self.population):
+            if i.is_infected():
                 return False
-            w += 1
-            return True
+        return True
