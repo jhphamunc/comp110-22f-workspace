@@ -85,5 +85,4 @@ def scale(head: Optional[Node], factor: int) -> Optional[Node]:
             if head.next is not None:
                 head.data *= factor
                 return scale(head.next)
-            else:
                 
